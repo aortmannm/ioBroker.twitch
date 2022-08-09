@@ -1,0 +1,78 @@
+{
+    "common": {
+        "name": "twitch",
+        "version": "0.0.1",
+        "news": {
+            "0.0.1": {
+                "en": "initial release",
+                "de": "Erstveröffentlichung",
+                "ru": "Начальная версия",
+                "pt": "lançamento inicial",
+                "nl": "Eerste uitgave",
+                "fr": "Première version",
+                "it": "Versione iniziale",
+                "es": "Versión inicial",
+                "pl": "Pierwsze wydanie",
+                "zh-cn": "首次出版"
+            }
+        },
+        "title": "Twitch",
+        "titleLang": {
+            "en": "Twitch",
+            "de": "Zucken",
+            "ru": "дергаться",
+            "pt": "Contração muscular",
+            "nl": "Zenuwtrekking",
+            "fr": "Tic",
+            "it": "Contrazione",
+            "es": "Contracción nerviosa",
+            "pl": "Skurcz",
+            "zh-cn": "抽搐"
+        },
+        "desc": {
+            "en": "Adapter to show Twitch information",
+            "de": "Adapter zum Anzeigen von Twitch-Informationen",
+            "ru": "Адаптер для отображения информации Twitch",
+            "pt": "Adaptador para mostrar informações do Twitch",
+            "nl": "Adapter om Twitch-informatie weer te geven",
+            "fr": "Adaptateur pour afficher les informations Twitch",
+            "it": "Adattatore per mostrare le informazioni su Twitch",
+            "es": "Adaptador para mostrar información de Twitch",
+            "pl": "Adapter do wyświetlania informacji Twitcha",
+            "zh-cn": "显示 Twitch 信息的适配器"
+        },
+        "authors": ["Adrian Ortmann <aortmann.dev@gmail.com>"],
+        "keywords": ["twitch"],
+        "license": "MIT",
+        "platform": "Javascript/Node.js",
+        "main": "build/main.js",
+        "icon": "twitch.png",
+        "enabled": true,
+        "extIcon": "https://raw.githubusercontent.com/Adrian Ortmann/ioBroker.twitch/main/admin/twitch.png",
+        "readme": "https://github.com/Adrian Ortmann/ioBroker.twitch/blob/main/README.md",
+        "loglevel": "info",
+        "restartAdapters": ["vis"],
+        "localLinks": {
+            "_default": "%web_protocol%://%ip%:%web_port%/vis/edit.html"
+        },
+        "mode": "daemon",
+        "type": "multimedia",
+        "compact": true,
+        "connectionType": "cloud",
+        "dataSource": "poll",
+        "materialize": true,
+        "eraseOnUpload": true,
+        "dependencies": [
+            {
+                "js-controller": ">=2.0.0"
+            },
+            "vis"
+        ]
+    },
+    "native": {
+        "option1": true,
+        "option2": "42"
+    },
+    "objects": [],
+    "instanceObjects": []
+}
