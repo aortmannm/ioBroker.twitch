@@ -20,6 +20,10 @@ Adapter to show Twitch information
 
 ## Changelog
 
+### 0.0.4 (2022-08-13)
+
+-   (aortmannm) - First usage of twitch API - Got the twitch ID for future calls
+
 ### 0.0.3 (2022-08-13)
 
 -   (aortmannm) - Some Cleanup

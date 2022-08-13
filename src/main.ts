@@ -3,8 +3,10 @@
  */
 
 import * as utils from '@iobroker/adapter-core';
+import { TwitchApi } from './twitch-api';
 
 class Twitch extends utils.Adapter {
+    private twitchApi: TwitchApi | undefined;
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
             ...options,
@@ -33,6 +35,14 @@ class Twitch extends utils.Adapter {
 
         this.log.info('Auth token: ' + this.config.authToken);
         this.log.info('Twitch Username: ' + this.config.username);
+
+        this.twitchApi = new TwitchApi(this.config.authToken, this.config.username, this.log);
+
+        try {
+            await this.twitchApi.initialize();
+        } catch (err: any) {}
+
+        await this.twitchApi.getFollowers();
     }
 
     /**

@@ -1,21 +1,39 @@
+import { default as axios } from 'axios';
+
+const CLIENT_ID = 'obgkb95iqahks1jtlzu4unrjvaq205';
+
 export class TwitchApi {
     private authToken: string;
     private username: string;
-    private userId = 0;
-    public constructor(authToken: string, username: string) {
+    private userId = '';
+    logger: ioBroker.Logger;
+    public constructor(authToken: string, username: string, logger: ioBroker.Logger) {
         this.authToken = authToken;
         this.username = username;
-
-        this.initialize();
+        this.logger = logger;
     }
 
-    private initialize() {
-        this.userId = this.getUserId();
+    public async initialize(): Promise<void> {
+        this.userId = await this.getUserId();
     }
 
-    public getFollowers() {}
+    public async getFollowers(): Promise<any> {}
 
-    private getUserId(): number {
-        return 1;
+    private getUserId(): Promise<string> {
+        const userInformationUrl = 'https://api.twitch.tv/helix/users';
+        return axios
+            .get(userInformationUrl, {
+                headers: {
+                    login: this.username,
+                    Authorization: `Bearer ${this.authToken}`,
+                    'Client-Id': CLIENT_ID,
+                },
+            })
+            .then((res) => {
+                return res.data.data[0].id;
+            })
+            .catch((err) => {
+                this.logger.error(`Error while getting user id: ${err}`);
+            });
     }
 }

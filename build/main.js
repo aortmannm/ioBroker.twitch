@@ -18,6 +18,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
+var import_twitch_api = require("./twitch-api");
 class Twitch extends utils.Adapter {
   constructor(options = {}) {
     super({
@@ -39,6 +40,12 @@ class Twitch extends utils.Adapter {
     }
     this.log.info("Auth token: " + this.config.authToken);
     this.log.info("Twitch Username: " + this.config.username);
+    this.twitchApi = new import_twitch_api.TwitchApi(this.config.authToken, this.config.username, this.log);
+    try {
+      await this.twitchApi.initialize();
+    } catch (err) {
+    }
+    await this.twitchApi.getFollowers();
   }
   onUnload(callback) {
     try {
