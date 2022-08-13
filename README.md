@@ -24,6 +24,10 @@ If you unfollow a person on twitch it will cleanup the channel and states in ioB
 
 ## Changelog
 
+### 0.0.7 (2022-08-13)
+
+-   (aortmannm) - First release to test in own production system
+
 ### 0.0.6 (2022-08-13)
 
 -   (aortmannm) - Folders for all channels are created

@@ -7,6 +7,8 @@ import { IFollower } from './interfaces/follower.interface';
 import { IStream } from './interfaces/stream.interface';
 import { TwitchApi } from './lib/twitch-api';
 
+const UPDATE_INTERVAL_IN_MILLISECONDS = 60000;
+
 class Twitch extends utils.Adapter {
     private twitchApi: TwitchApi;
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
@@ -16,8 +18,6 @@ class Twitch extends utils.Adapter {
         });
         this.on('ready', this.onReady.bind(this));
         this.on('stateChange', this.onStateChange.bind(this));
-        // this.on('objectChange', this.onObjectChange.bind(this));
-        // this.on('message', this.onMessage.bind(this));
         this.on('unload', this.onUnload.bind(this));
     }
 
@@ -35,9 +35,6 @@ class Twitch extends utils.Adapter {
             return;
         }
 
-        this.log.info('Auth token: ' + this.config.authToken);
-        this.log.info('Twitch Username: ' + this.config.username);
-
         this.twitchApi = new TwitchApi(this.config.authToken, this.config.username, this.log);
 
         try {
@@ -53,7 +50,7 @@ class Twitch extends utils.Adapter {
 
         this.setInterval(() => {
             this.updateFollowersInStore();
-        }, 60000);
+        }, UPDATE_INTERVAL_IN_MILLISECONDS);
     }
 
     private async updateFollowersInStore(): Promise<void> {
@@ -63,27 +60,47 @@ class Twitch extends utils.Adapter {
             return;
         }
 
+        await this.cleanUpOldFollowers(followers);
+
         const liveStreams = await this.twitchApi.getLiveStreamsIFollow();
 
         for (const follower of followers) {
-            const followerId = follower.to_name;
+            const followerName = follower.to_name;
+
             const streamStatus = liveStreams.find((stream) => {
-                return stream.user_name === followerId;
+                return stream.user_name === followerName;
             });
 
-            const followerChannelId = `channels.${followerId}`;
-            await this.createFolder(followerChannelId, 'Followed Twitch Channel');
+            const followerChannelId = `channels.${followerName}`;
+            await this.createFolder(followerChannelId, 'Followed Twitch Channel', followerName);
             await this.createOrUpdateState(followerChannelId, follower, streamStatus);
         }
     }
 
-    private async createFolder(id: string, name: string): Promise<any> {
+    private async cleanUpOldFollowers(followers: Array<IFollower>): Promise<void> {
+        const channels = await this.getChannelsAsync('channels');
+
+        const channelsToDelete = channels.filter((channel) => {
+            return !followers.find((follower: IFollower) => {
+                return follower.to_name === channel.native.twitchName;
+            });
+        });
+
+        for (const channelToDelete of channelsToDelete) {
+            this.log.debug(`Cleaning up unfollowed channel: ${channelToDelete._id}`);
+            await this.deleteChannelAsync('channels', channelToDelete._id);
+        }
+    }
+
+    private async createFolder(id: string, name: string, followerName?: string): Promise<any> {
         await this.setObjectNotExistsAsync(id, {
             type: 'channel',
             common: {
                 name: name,
             },
-            native: {},
+            native: {
+                twitchName: followerName,
+            },
         });
     }
 

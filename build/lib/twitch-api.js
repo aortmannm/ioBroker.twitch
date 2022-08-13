@@ -67,7 +67,7 @@ class TwitchApi {
     }).then((res) => {
       followers = [...followers, ...res.data.data];
       if (res.data.pagination.cursor) {
-        this.logger.debug("Loading next page");
+        this.logger.debug("Too much followers, loading next page");
         return this.getFollowers(followers, res.data.pagination.cursor);
       } else {
         return followers;
@@ -89,7 +89,7 @@ class TwitchApi {
     }).then((res) => {
       streams = [...streams, ...res.data.data];
       if (res.data.pagination.cursor) {
-        this.logger.debug("Loading next page");
+        this.logger.debug("Too much streamers, loading next page");
         return this.getLiveStreamsIFollow(streams, res.data.pagination.cursor);
       } else {
         return streams;
