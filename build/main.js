@@ -25,6 +25,7 @@ class Twitch extends utils.Adapter {
       ...options,
       name: "twitch"
     });
+    this.updateOnlineStateInterval = 0;
     this.on("ready", this.onReady.bind(this));
     this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
@@ -50,7 +51,7 @@ class Twitch extends utils.Adapter {
     this.updateFollowersInStore();
   }
   async updateFollowersInStore() {
-    var _a;
+    var _a, _b;
     const followers = await ((_a = this.twitchApi) == null ? void 0 : _a.getFollowers());
     if (!followers) {
       return;
@@ -58,10 +59,16 @@ class Twitch extends utils.Adapter {
     if (followers.length > 0) {
       await this.createFolder("channels", "Followed Twitch Channels");
     }
+    const liveStreams = await ((_b = this.twitchApi) == null ? void 0 : _b.getLiveStreamsIFollow());
     for (const follower of followers) {
-      const followerId = `channels.${follower.to_name}`;
-      await this.createFolder(followerId, "Followed Twitch Channel");
-      await this.createOrUpdateState(followerId);
+      const followerId = follower.to_name;
+      const streamStatus = liveStreams == null ? void 0 : liveStreams.find((stream) => {
+        return stream.user_name === followerId;
+      });
+      this.log.error("Stream status " + (streamStatus == null ? void 0 : streamStatus.type));
+      const followerChannelId = `channels.${followerId}`;
+      await this.createFolder(followerChannelId, "Followed Twitch Channel");
+      await this.createOrUpdateState(followerChannelId, follower, streamStatus);
     }
   }
   async createFolder(id, name) {
@@ -73,8 +80,20 @@ class Twitch extends utils.Adapter {
       native: {}
     });
   }
-  async createOrUpdateState(followerId) {
-    await this.createStateAsync(followerId, followerId, "online");
+  async createOrUpdateState(followerId, follower, stream) {
+    const onlineStateId = `${followerId}.online`;
+    await this.setObjectNotExistsAsync(onlineStateId, {
+      type: "state",
+      common: {
+        name: "Online status",
+        type: "boolean",
+        role: "indicator",
+        read: true,
+        write: false
+      },
+      native: {}
+    });
+    await this.setStateAsync(onlineStateId, { val: (stream == null ? void 0 : stream.type) === "live" ? true : false, ack: true });
   }
   onUnload(callback) {
     try {

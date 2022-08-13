@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/interfaces/stream.interface.ts"],
+  "sourcesContent": ["export interface IStream {\r\n    id: string;\r\n    user_id: string;\r\n    user_login: string;\r\n    user_name: string;\r\n    game_id: string;\r\n    game_name: string;\r\n    type: string;\r\n    title: string;\r\n    viewer_count: string;\r\n    started_at: string;\r\n    language: string;\r\n    thumbnail_url: string;\r\n}\r\n"],
+  "mappings": ";;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}

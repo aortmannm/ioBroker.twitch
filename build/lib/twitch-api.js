@@ -78,6 +78,28 @@ class TwitchApi {
       return followers;
     });
   }
+  async getLiveStreamsIFollow(streams = [], paginationCursor) {
+    let streamsUrl = `https://api.twitch.tv/helix/streams/followed?user_id=${this.userId}&first=100`;
+    if (paginationCursor) {
+      streamsUrl = `https://api.twitch.tv/helix/streams/followed?user_id=${this.userId}&first=100&after=${paginationCursor}`;
+    }
+    return import_axios.default.get(streamsUrl, {
+      headers: {
+        ...this.defaultHeaderOptions
+      }
+    }).then((res) => {
+      streams = [...streams, ...res.data.data];
+      if (res.data.pagination.cursor) {
+        this.logger.debug("Loading next page");
+        return this.getLiveStreamsIFollow(streams, res.data.pagination.cursor);
+      } else {
+        return streams;
+      }
+    }).catch((err) => {
+      this.logger.error(`Couldn't retreive list of the channels you follow ${err}`);
+      return streams;
+    });
+  }
 }
 // Annotate the CommonJS export names for ESM import in node:
 0 && (module.exports = {

@@ -3,10 +3,13 @@
  */
 
 import * as utils from '@iobroker/adapter-core';
+import { IFollower } from './interfaces/follower.interface';
+import { IStream } from './interfaces/stream.interface';
 import { TwitchApi } from './lib/twitch-api';
 
 class Twitch extends utils.Adapter {
     private twitchApi: TwitchApi | undefined;
+    private updateOnlineStateInterval = 0;
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
             ...options,
@@ -46,6 +49,10 @@ class Twitch extends utils.Adapter {
         }
 
         this.updateFollowersInStore();
+
+        // this.updateOnlineStateInterval = this.setInterval(() => {
+        //     await this.twitchApi.getOnlineStreams();
+        // }, 60000);
     }
 
     private async updateFollowersInStore(): Promise<void> {
@@ -58,10 +65,19 @@ class Twitch extends utils.Adapter {
             await this.createFolder('channels', 'Followed Twitch Channels');
         }
 
+        const liveStreams = await this.twitchApi?.getLiveStreamsIFollow();
+
         for (const follower of followers) {
-            const followerId = `channels.${follower.to_name}`;
-            await this.createFolder(followerId, 'Followed Twitch Channel');
-            await this.createOrUpdateState(followerId);
+            const followerId = follower.to_name;
+            const streamStatus = liveStreams?.find((stream) => {
+                return stream.user_name === followerId;
+            });
+
+            this.log.error('Stream status ' + streamStatus?.type);
+
+            const followerChannelId = `channels.${followerId}`;
+            await this.createFolder(followerChannelId, 'Followed Twitch Channel');
+            await this.createOrUpdateState(followerChannelId, follower, streamStatus);
         }
     }
 
@@ -75,8 +91,25 @@ class Twitch extends utils.Adapter {
         });
     }
 
-    private async createOrUpdateState(followerId: string): Promise<any> {
-        await this.createStateAsync(followerId, followerId, 'online');
+    private async createOrUpdateState(
+        followerId: string,
+        follower: IFollower,
+        stream: IStream | undefined,
+    ): Promise<any> {
+        const onlineStateId = `${followerId}.online`;
+        await this.setObjectNotExistsAsync(onlineStateId, {
+            type: 'state',
+            common: {
+                name: 'Online status',
+                type: 'boolean',
+                role: 'indicator',
+                read: true,
+                write: false,
+            },
+            native: {},
+        });
+
+        await this.setStateAsync(onlineStateId, { val: stream?.type === 'live' ? true : false, ack: true });
     }
 
     /**
