@@ -42,7 +42,15 @@ class Twitch extends utils.Adapter {
             await this.twitchApi.initialize();
         } catch (err: any) {}
 
-        await this.twitchApi.getFollowers();
+        this.updateFollowersInStore();
+    }
+
+    private async updateFollowersInStore(): Promise<void> {
+        const followers = await this.twitchApi?.getFollowers();
+        this.log.error(`Followers: ${followers?.length}`);
+        // followers?.forEach((follower) => {
+        //     // this.log.error(`Follower ${follower.to_name}`);
+        // });
     }
 
     /**

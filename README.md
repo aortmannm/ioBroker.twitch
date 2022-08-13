@@ -20,6 +20,10 @@ Adapter to show Twitch information
 
 ## Changelog
 
+### 0.0.5 (2022-08-13)
+
+-   (aortmannm) - Added recursive calls for twitch follower api and pagination
+
 ### 0.0.4 (2022-08-13)
 
 -   (aortmannm) - First usage of twitch API - Got the twitch ID for future calls
