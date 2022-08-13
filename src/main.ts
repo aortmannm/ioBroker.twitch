@@ -3,7 +3,7 @@
  */
 
 import * as utils from '@iobroker/adapter-core';
-import { TwitchApi } from './twitch-api';
+import { TwitchApi } from './lib/twitch-api';
 
 class Twitch extends utils.Adapter {
     private twitchApi: TwitchApi | undefined;
@@ -40,17 +40,43 @@ class Twitch extends utils.Adapter {
 
         try {
             await this.twitchApi.initialize();
-        } catch (err: any) {}
+            await this.setStateAsync('info.connection', { val: true, ack: true });
+        } catch (err: any) {
+            await this.setStateAsync('info.connection', { val: false, ack: true });
+        }
 
         this.updateFollowersInStore();
     }
 
     private async updateFollowersInStore(): Promise<void> {
         const followers = await this.twitchApi?.getFollowers();
-        this.log.error(`Followers: ${followers?.length}`);
-        // followers?.forEach((follower) => {
-        //     // this.log.error(`Follower ${follower.to_name}`);
-        // });
+        if (!followers) {
+            return;
+        }
+
+        if (followers.length > 0) {
+            await this.createFolder('channels', 'Followed Twitch Channels');
+        }
+
+        for (const follower of followers) {
+            const followerId = `channels.${follower.to_name}`;
+            await this.createFolder(followerId, 'Followed Twitch Channel');
+            await this.createOrUpdateState(followerId);
+        }
+    }
+
+    private async createFolder(id: string, name: string): Promise<any> {
+        await this.setObjectNotExistsAsync(id, {
+            type: 'channel',
+            common: {
+                name: name,
+            },
+            native: {},
+        });
+    }
+
+    private async createOrUpdateState(followerId: string): Promise<any> {
+        await this.createStateAsync(followerId, followerId, 'online');
     }
 
     /**
@@ -58,32 +84,12 @@ class Twitch extends utils.Adapter {
      */
     private onUnload(callback: () => void): void {
         try {
-            // Here you must clear all timeouts or intervals that may still be active
-            // clearTimeout(timeout1);
-            // clearTimeout(timeout2);
-            // ...
-            // clearInterval(interval1);
-
+            this.setState('info.connection', { val: false, ack: true });
             callback();
         } catch (e) {
             callback();
         }
     }
-
-    // If you need to react to object changes, uncomment the following block and the corresponding line in the constructor.
-    // You also need to subscribe to the objects with `this.subscribeObjects`, similar to `this.subscribeStates`.
-    // /**
-    //  * Is called if a subscribed object changes
-    //  */
-    // private onObjectChange(id: string, obj: ioBroker.Object | null | undefined): void {
-    //     if (obj) {
-    //         // The object was changed
-    //         this.log.info(`object ${id} changed: ${JSON.stringify(obj)}`);
-    //     } else {
-    //         // The object was deleted
-    //         this.log.info(`object ${id} deleted`);
-    //     }
-    // }
 
     /**
      * Is called if a subscribed state changes
@@ -97,23 +103,6 @@ class Twitch extends utils.Adapter {
             this.log.info(`state ${id} deleted`);
         }
     }
-
-    // If you need to accept messages in your adapter, uncomment the following block and the corresponding line in the constructor.
-    // /**
-    //  * Some message was sent to this instance over message box. Used by email, pushover, text2speech, ...
-    //  * Using this method requires "common.messagebox" property to be set to true in io-package.json
-    //  */
-    // private onMessage(obj: ioBroker.Message): void {
-    //     if (typeof obj === 'object' && obj.message) {
-    //         if (obj.command === 'send') {
-    //             // e.g. send email or pushover or whatever
-    //             this.log.info('send command');
-
-    //             // Send response in callback if required
-    //             if (obj.callback) this.sendTo(obj.from, obj.command, 'Message received', obj.callback);
-    //         }
-    //     }
-    // }
 }
 
 if (require.main !== module) {

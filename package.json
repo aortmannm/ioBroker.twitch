@@ -1,6 +1,6 @@
 {
   "name": "iobroker.twitch",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Adapter to show Twitch information",
   "author": {
     "name": "Adrian Ortmann",

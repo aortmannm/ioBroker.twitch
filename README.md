@@ -20,6 +20,10 @@ Adapter to show Twitch information
 
 ## Changelog
 
+### 0.0.6 (2022-08-13)
+
+-   (aortmannm) - Folders for all channels are created
+
 ### 0.0.5 (2022-08-13)
 
 -   (aortmannm) - Added recursive calls for twitch follower api and pagination

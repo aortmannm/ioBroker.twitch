@@ -18,7 +18,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
-var import_twitch_api = require("./twitch-api");
+var import_twitch_api = require("./lib/twitch-api");
 class Twitch extends utils.Adapter {
   constructor(options = {}) {
     super({
@@ -43,17 +43,42 @@ class Twitch extends utils.Adapter {
     this.twitchApi = new import_twitch_api.TwitchApi(this.config.authToken, this.config.username, this.log);
     try {
       await this.twitchApi.initialize();
+      await this.setStateAsync("info.connection", { val: true, ack: true });
     } catch (err) {
+      await this.setStateAsync("info.connection", { val: false, ack: true });
     }
     this.updateFollowersInStore();
   }
   async updateFollowersInStore() {
     var _a;
     const followers = await ((_a = this.twitchApi) == null ? void 0 : _a.getFollowers());
-    this.log.error(`Followers: ${followers == null ? void 0 : followers.length}`);
+    if (!followers) {
+      return;
+    }
+    if (followers.length > 0) {
+      await this.createFolder("channels", "Followed Twitch Channels");
+    }
+    for (const follower of followers) {
+      const followerId = `channels.${follower.to_name}`;
+      await this.createFolder(followerId, "Followed Twitch Channel");
+      await this.createOrUpdateState(followerId);
+    }
+  }
+  async createFolder(id, name) {
+    await this.setObjectNotExistsAsync(id, {
+      type: "channel",
+      common: {
+        name
+      },
+      native: {}
+    });
+  }
+  async createOrUpdateState(followerId) {
+    await this.createStateAsync(followerId, followerId, "online");
   }
   onUnload(callback) {
     try {
+      this.setState("info.connection", { val: false, ack: true });
       callback();
     } catch (e) {
       callback();

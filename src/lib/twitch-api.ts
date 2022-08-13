@@ -1,5 +1,5 @@
 import { default as axios } from 'axios';
-import { IFollower } from './interfaces/follower.interface';
+import { IFollower } from '../interfaces/follower.interface';
 
 const CLIENT_ID = 'obgkb95iqahks1jtlzu4unrjvaq205';
 
@@ -69,6 +69,4 @@ export class TwitchApi {
                 return followers;
             });
     }
-
-    public getLiveStatus(): void {}
 }
