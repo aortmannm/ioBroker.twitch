@@ -29,27 +29,16 @@ class Twitch extends utils.Adapter {
     this.on("unload", this.onUnload.bind(this));
   }
   async onReady() {
+    if (!this.config.authToken) {
+      this.log.error("Auth token is empty - please check instance configuration");
+      return;
+    }
+    if (!this.config.username) {
+      this.log.error("Username is empty - please check instance configuration");
+      return;
+    }
     this.log.info("Auth token: " + this.config.authToken);
     this.log.info("Twitch Username: " + this.config.username);
-    await this.setObjectNotExistsAsync("testVariable", {
-      type: "state",
-      common: {
-        name: "testVariable",
-        type: "boolean",
-        role: "indicator",
-        read: true,
-        write: true
-      },
-      native: {}
-    });
-    this.subscribeStates("testVariable");
-    await this.setStateAsync("testVariable", true);
-    await this.setStateAsync("testVariable", { val: true, ack: true });
-    await this.setStateAsync("testVariable", { val: true, ack: true, expire: 30 });
-    let result = await this.checkPasswordAsync("admin", "iobroker");
-    this.log.info("check user admin pw iobroker: " + result);
-    result = await this.checkGroupAsync("admin", "admin");
-    this.log.info("check group user admin group admin: " + result);
   }
   onUnload(callback) {
     try {
