@@ -8,8 +8,7 @@ import { IStream } from './interfaces/stream.interface';
 import { TwitchApi } from './lib/twitch-api';
 
 class Twitch extends utils.Adapter {
-    private twitchApi: TwitchApi | undefined;
-    private updateOnlineStateInterval = 0;
+    private twitchApi: TwitchApi;
     public constructor(options: Partial<utils.AdapterOptions> = {}) {
         super({
             ...options,
@@ -48,32 +47,29 @@ class Twitch extends utils.Adapter {
             await this.setStateAsync('info.connection', { val: false, ack: true });
         }
 
+        await this.createFolder('channels', 'Followed Twitch Channels');
+
         this.updateFollowersInStore();
 
-        // this.updateOnlineStateInterval = this.setInterval(() => {
-        //     await this.twitchApi.getOnlineStreams();
-        // }, 60000);
+        this.setInterval(() => {
+            this.updateFollowersInStore();
+        }, 60000);
     }
 
     private async updateFollowersInStore(): Promise<void> {
-        const followers = await this.twitchApi?.getFollowers();
-        if (!followers) {
+        this.log.debug('Updating Twich followers');
+        const followers = await this.twitchApi.getFollowers();
+        if (!followers || followers.length === 0) {
             return;
         }
 
-        if (followers.length > 0) {
-            await this.createFolder('channels', 'Followed Twitch Channels');
-        }
-
-        const liveStreams = await this.twitchApi?.getLiveStreamsIFollow();
+        const liveStreams = await this.twitchApi.getLiveStreamsIFollow();
 
         for (const follower of followers) {
             const followerId = follower.to_name;
-            const streamStatus = liveStreams?.find((stream) => {
+            const streamStatus = liveStreams.find((stream) => {
                 return stream.user_name === followerId;
             });
-
-            this.log.error('Stream status ' + streamStatus?.type);
 
             const followerChannelId = `channels.${followerId}`;
             await this.createFolder(followerChannelId, 'Followed Twitch Channel');
@@ -110,6 +106,21 @@ class Twitch extends utils.Adapter {
         });
 
         await this.setStateAsync(onlineStateId, { val: stream?.type === 'live' ? true : false, ack: true });
+
+        const viewerStateId = `${followerId}.viewer`;
+        await this.setObjectNotExistsAsync(viewerStateId, {
+            type: 'state',
+            common: {
+                name: 'Count of Viewers',
+                type: 'number',
+                role: 'indicator',
+                read: true,
+                write: false,
+            },
+            native: {},
+        });
+
+        await this.setStateAsync(viewerStateId, { val: stream?.viewer_count ? stream.viewer_count : 0, ack: true });
     }
 
     /**

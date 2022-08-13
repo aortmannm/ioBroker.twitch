@@ -24,7 +24,7 @@
         "strict": true,
         // Or enable some of those features for more fine-grained control
         // "strictNullChecks": true,
-        // "strictPropertyInitialization": true,
+        "strictPropertyInitialization": false,
         // "strictBindCallApply": true,
         // "noImplicitAny": true,
         // "noUnusedLocals": true,

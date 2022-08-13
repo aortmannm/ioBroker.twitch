@@ -25,7 +25,6 @@ class Twitch extends utils.Adapter {
       ...options,
       name: "twitch"
     });
-    this.updateOnlineStateInterval = 0;
     this.on("ready", this.onReady.bind(this));
     this.on("stateChange", this.onStateChange.bind(this));
     this.on("unload", this.onUnload.bind(this));
@@ -48,24 +47,24 @@ class Twitch extends utils.Adapter {
     } catch (err) {
       await this.setStateAsync("info.connection", { val: false, ack: true });
     }
+    await this.createFolder("channels", "Followed Twitch Channels");
     this.updateFollowersInStore();
+    this.setInterval(() => {
+      this.updateFollowersInStore();
+    }, 6e4);
   }
   async updateFollowersInStore() {
-    var _a, _b;
-    const followers = await ((_a = this.twitchApi) == null ? void 0 : _a.getFollowers());
-    if (!followers) {
+    this.log.debug("Updating Twich followers");
+    const followers = await this.twitchApi.getFollowers();
+    if (!followers || followers.length === 0) {
       return;
     }
-    if (followers.length > 0) {
-      await this.createFolder("channels", "Followed Twitch Channels");
-    }
-    const liveStreams = await ((_b = this.twitchApi) == null ? void 0 : _b.getLiveStreamsIFollow());
+    const liveStreams = await this.twitchApi.getLiveStreamsIFollow();
     for (const follower of followers) {
       const followerId = follower.to_name;
-      const streamStatus = liveStreams == null ? void 0 : liveStreams.find((stream) => {
+      const streamStatus = liveStreams.find((stream) => {
         return stream.user_name === followerId;
       });
-      this.log.error("Stream status " + (streamStatus == null ? void 0 : streamStatus.type));
       const followerChannelId = `channels.${followerId}`;
       await this.createFolder(followerChannelId, "Followed Twitch Channel");
       await this.createOrUpdateState(followerChannelId, follower, streamStatus);
@@ -94,6 +93,19 @@ class Twitch extends utils.Adapter {
       native: {}
     });
     await this.setStateAsync(onlineStateId, { val: (stream == null ? void 0 : stream.type) === "live" ? true : false, ack: true });
+    const viewerStateId = `${followerId}.viewer`;
+    await this.setObjectNotExistsAsync(viewerStateId, {
+      type: "state",
+      common: {
+        name: "Count of Viewers",
+        type: "number",
+        role: "indicator",
+        read: true,
+        write: false
+      },
+      native: {}
+    });
+    await this.setStateAsync(viewerStateId, { val: (stream == null ? void 0 : stream.viewer_count) ? stream.viewer_count : 0, ack: true });
   }
   onUnload(callback) {
     try {

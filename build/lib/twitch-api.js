@@ -31,7 +31,6 @@ var import_axios = __toESM(require("axios"));
 const CLIENT_ID = "obgkb95iqahks1jtlzu4unrjvaq205";
 class TwitchApi {
   constructor(authToken, username, logger) {
-    this.userId = "";
     this.authToken = authToken;
     this.username = username;
     this.logger = logger;

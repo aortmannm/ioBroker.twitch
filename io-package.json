@@ -19,15 +19,15 @@
         "title": "Twitch",
         "titleLang": {
             "en": "Twitch",
-            "de": "Zucken",
-            "ru": "дергаться",
-            "pt": "Contração muscular",
-            "nl": "Zenuwtrekking",
-            "fr": "Tic",
-            "it": "Contrazione",
-            "es": "Contracción nerviosa",
-            "pl": "Skurcz",
-            "zh-cn": "抽搐"
+            "de": "Twitch",
+            "ru": "Twitch",
+            "pt": "Twitch",
+            "nl": "Twitch",
+            "fr": "Twitch",
+            "it": "Twitch",
+            "es": "Twitch",
+            "pl": "Twitch",
+            "zh-cn": "Twitch"
         },
         "desc": {
             "en": "Adapter to show Twitch information",

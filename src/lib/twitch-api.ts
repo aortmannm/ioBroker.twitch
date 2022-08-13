@@ -7,7 +7,7 @@ const CLIENT_ID = 'obgkb95iqahks1jtlzu4unrjvaq205';
 export class TwitchApi {
     private authToken: string;
     private username: string;
-    private userId = '';
+    private userId: string;
     private logger: ioBroker.Logger;
     private defaultHeaderOptions: { Authorization: string; 'Client-Id': string };
 
