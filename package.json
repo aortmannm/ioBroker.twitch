@@ -6,14 +6,14 @@
     "name": "Adrian Ortmann",
     "email": "aortmann.dev@gmail.com"
   },
-  "homepage": "https://github.com/Adrian Ortmann/ioBroker.twitch",
+  "homepage": "https://github.com/aortmannm/ioBroker.twitch",
   "license": "MIT",
   "keywords": [
     "twitch"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Adrian Ortmann/ioBroker.twitch"
+    "url": "https://github.com/aortmannm/ioBroker.twitch"
   },
   "dependencies": {
     "@iobroker/adapter-core": "^2.6.0"
@@ -85,7 +85,7 @@
     "release": "release-script"
   },
   "bugs": {
-    "url": "https://github.com/Adrian Ortmann/ioBroker.twitch/issues"
+    "url": "https://github.com/aortmannm/ioBroker.twitch/issues"
   },
   "readmeFilename": "README.md"
 }

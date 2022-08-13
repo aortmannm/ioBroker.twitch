@@ -48,10 +48,9 @@
         "main": "build/main.js",
         "icon": "twitch.png",
         "enabled": true,
-        "extIcon": "https://raw.githubusercontent.com/Adrian Ortmann/ioBroker.twitch/main/admin/twitch.png",
-        "readme": "https://github.com/Adrian Ortmann/ioBroker.twitch/blob/main/README.md",
+        "extIcon": "https://raw.githubusercontent.com/aortmannm/ioBroker.twitch/main/admin/twitch.png",
+        "readme": "https://github.com/aortmannm/ioBroker.twitch/blob/main/README.md",
         "loglevel": "info",
-        "restartAdapters": ["vis"],
         "localLinks": {
             "_default": "%web_protocol%://%ip%:%web_port%/vis/edit.html"
         },
@@ -62,17 +61,45 @@
         "dataSource": "poll",
         "materialize": true,
         "eraseOnUpload": true,
+        "adminUI": {
+            "config": "json"
+        },
         "dependencies": [
             {
-                "js-controller": ">=2.0.0"
-            },
-            "vis"
+                "js-controller": ">=3.3.19"
+            }
+        ],
+        "globalDependencies": [
+            {
+                "admin": ">=5.1.28"
+            }
         ]
     },
     "native": {
-        "option1": true,
-        "option2": "42"
+        "authToken": "",
+        "username": ""
     },
     "objects": [],
-    "instanceObjects": []
+    "instanceObjects": [
+        {
+            "_id": "info",
+            "type": "channel",
+            "common": {
+                "name": "Information"
+            },
+            "native": {}
+        },
+        {
+            "_id": "info.connection",
+            "type": "state",
+            "common": {
+                "role": "indicator.connected",
+                "name": "Device or service connected",
+                "type": "boolean",
+                "read": true,
+                "write": false,
+                "def": false
+            }
+        }
+    ]
 }
