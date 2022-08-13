@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/interfaces/follower.interface.ts"],
+  "sourcesContent": ["export interface IFollower {\r\n    from_id: string;\r\n    from_login: string;\r\n    from_name: string;\r\n    to_id: string;\r\n    to_name: string;\r\n    followed_at: string;\r\n}\r\n"],
+  "mappings": ";;;;;;;;;;;;;;AAAA;AAAA;",
+  "names": []
+}
