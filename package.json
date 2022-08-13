@@ -1,6 +1,6 @@
 {
   "name": "iobroker.twitch",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Adapter to show Twitch information",
   "author": {
     "name": "Adrian Ortmann",
@@ -80,7 +80,7 @@
     "test:integration": "mocha test/integration --exit",
     "test": "npm run test:ts && npm run test:package",
     "check": "tsc --noEmit",
-    "lint": "eslint --ext .ts,.tsx src/ admin/src/",
+    "lint": "eslint --ext .ts,.tsx src/",
     "translate": "translate-adapter",
     "release": "release-script"
   },

@@ -29,8 +29,8 @@ class Twitch extends utils.Adapter {
     this.on("unload", this.onUnload.bind(this));
   }
   async onReady() {
-    this.log.info("config option1: " + this.config.option1);
-    this.log.info("config option2: " + this.config.option2);
+    this.log.info("Auth token: " + this.config.authToken);
+    this.log.info("Twitch Username: " + this.config.username);
     await this.setObjectNotExistsAsync("testVariable", {
       type: "state",
       common: {

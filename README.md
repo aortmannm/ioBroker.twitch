@@ -20,6 +20,10 @@ Adapter to show Twitch information
 
 ## Changelog
 
+### 0.0.3 (2022-08-13)
+
+-   (aortmannm) - Some Cleanup
+
 ### 0.0.2 (2022-08-13)
 
 -   (aortmannm) - Added Admin 5 configuration
