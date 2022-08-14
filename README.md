@@ -5,8 +5,6 @@
 [![NPM version](https://img.shields.io/npm/v/iobroker.twitch.svg)](https://www.npmjs.com/package/iobroker.twitch)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.twitch.svg)](https://www.npmjs.com/package/iobroker.twitch)
 ![Number of Installations](https://iobroker.live/badges/twitch-installed.svg)
-![Current version in stable repository](https://iobroker.live/badges/twitch-stable.svg)
-[![Dependency Status](https://img.shields.io/david/Adrian Ortmann/iobroker.twitch.svg)](https://david-dm.org/Adrian Ortmann/iobroker.twitch)
 
 [![NPM](https://nodei.co/npm/iobroker.twitch.png?downloads=true)](https://nodei.co/npm/iobroker.twitch/)
 
