@@ -12,6 +12,8 @@
 
 ## Twitch adapter for ioBroker
 
+Description and Configuration how to get the auth token is in the installed adapter instance.
+
 Adapter to show Twitch information about the persons you follow.
 
 Right now it can list all the Followers with the online status and viewer count. The online status and viewer count will update every 60 Seconds.
