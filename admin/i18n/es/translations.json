@@ -1,5 +1,7 @@
 {
     "Options": "Opciones",
     "Authentication Token": "Token de autenticación",
-    "Twitch Username": "Nombre de usuario de contracción"
+    "Twitch Username": "Nombre de usuario de contracción",
+    "Authentication Description": "Para obtener el token de autenticación, debe presionar el enlace debajo de la descripción. ",
+    "Authentication Link": "Enlace de autenticación"
 }

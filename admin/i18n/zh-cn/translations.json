@@ -1,5 +1,7 @@
 {
     "Options": "选项",
     "Authentication Token": "身份验证令牌",
-    "Twitch Username": "抽搐用户名"
+    "Twitch Username": "抽搐用户名",
+    "Authentication Description": "要取得你的核证,就必须在说明中宣传联系。 在那以后,将打开新一张的桌子,在那里,你需要想到Twitch,并给予准入。 当你接受时,应把你调到你的地方。 在讲话中,你需要复制“见图”。.",
+    "Authentication Link": "认证链接"
 }

@@ -1,5 +1,7 @@
 {
     "Options": "Opties",
     "Authentication Token": "Authenticatietoken",
-    "Twitch Username": "Twitch-gebruikersnaam"
+    "Twitch Username": "Twitch-gebruikersnaam",
+    "Authentication Description": "Om de authenticatie te krijgen moet je de Link onder de beschrijving drukken. Nadat er een nieuwe rekening wordt geopend in de browser waar je inlogt bij Twitch en toegang moet geven. Als je het accepteert, moet je naar je lokaal gebied leiden. In de adresbar moet je de toegangsgesprekken kopiëren als op de foto.",
+    "Authentication Link": "Authenticatielink"
 }

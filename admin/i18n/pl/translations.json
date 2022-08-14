@@ -1,5 +1,7 @@
 {
     "Options": "Opcje",
     "Authentication Token": "Token uwierzytelniania",
-    "Twitch Username": "Nazwa użytkownika Twitcha"
+    "Twitch Username": "Nazwa użytkownika Twitcha",
+    "Authentication Description": "Aby otrzymać autentyczność musisz skłaniać Link do opisu. Po otwarciu nowej tabeli w przeglądarce, gdzie musisz logować do Twitch i dać dostęp. Kiedy akceptujesz, musisz przekierować się do swojego lokalnego gospodarza. W przemówieniu musisz kopiować dostęp_token jako pokazany w obrazie.",
+    "Authentication Link": "Link uwierzytelniający"
 }

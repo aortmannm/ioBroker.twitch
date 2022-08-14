@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "twitch",
-        "version": "0.0.8",
+        "version": "0.0.9",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -41,8 +41,12 @@
             "pl": "Adapter do wyświetlania informacji Twitcha",
             "zh-cn": "显示 Twitch 信息的适配器"
         },
-        "authors": ["Adrian Ortmann <aortmann.dev@gmail.com>"],
-        "keywords": ["twitch"],
+        "authors": [
+            "Adrian Ortmann <aortmann.dev@gmail.com>"
+        ],
+        "keywords": [
+            "twitch"
+        ],
         "license": "MIT",
         "platform": "Javascript/Node.js",
         "main": "build/main.js",

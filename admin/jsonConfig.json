@@ -19,6 +19,29 @@
                     "md": 6,
                     "lg": 6,
                     "label": "Twitch Username"
+                },
+                "authTokenDescription": {
+                    "type": "staticText",
+                    "label": "Authentication Description",
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "authTokenLink": {
+                    "type": "staticLink",
+                    "label": "Authentication Link",
+                    "href": "https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=obgkb95iqahks1jtlzu4unrjvaq205&redirect_uri=http://localhost&scope=user%3Aread%3Afollows",
+                    "button": true,
+                    "sm": 12,
+                    "md": 12,
+                    "lg": 12
+                },
+                "authExampleImage": {
+                    "type": "staticImage",
+                    "src": "auth.png",
+                    "sm": 6,
+                    "md": 6,
+                    "lg": 6
                 }
             }
         }

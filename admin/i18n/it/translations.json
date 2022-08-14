@@ -1,5 +1,7 @@
 {
     "Options": "Opzioni",
     "Authentication Token": "Token di autenticazione",
-    "Twitch Username": "Nome utente di Twitch"
+    "Twitch Username": "Nome utente di Twitch",
+    "Authentication Description": "Per ottenere il token di autenticazione è necessario premere il link sotto la descrizione. Dopo ci sarà aperto una nuova scheda nel browser in cui è necessario accedere a Twitch e dare accesso. Quando accetti dovrebbe reindirizzarti al tuo localhost. Nella barra degli indirizzi è necessario copiare l'accesso_token come mostrato nell'immagine.",
+    "Authentication Link": "Collegamento di autenticazione"
 }

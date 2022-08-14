@@ -34,6 +34,10 @@ on({ id: VINI_ONLINE_STATE, val: true, ack: true, change: 'ne' }, () => {
 
 ## Changelog
 
+### 0.0.9 (2022-08-14)
+
+-   (aortmannm) - Added description to get the auth token in Instance Settings
+
 ### 0.0.8 (2022-08-14)
 
 -   (aortmannm) - Added more stream information and updated the twitch logo

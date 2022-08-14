@@ -52,7 +52,7 @@ class TwitchApi {
     }).then((res) => {
       return res.data.data[0].id;
     }).catch((err) => {
-      this.logger.error(`Error while getting user id: ${err}`);
+      throw new Error(`Error in intialization, auth token or username wrong: ${err}`);
     });
   }
   async getFollowers(followers = [], paginationCursor) {
@@ -95,7 +95,7 @@ class TwitchApi {
         return streams;
       }
     }).catch((err) => {
-      this.logger.error(`Couldn't retreive list of the channels you follow ${err}`);
+      this.logger.error(`Couldn't retreive list of the live streams you follow ${err}`);
       return streams;
     });
   }

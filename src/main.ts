@@ -40,10 +40,13 @@ class Twitch extends utils.Adapter {
 
         try {
             await this.twitchApi.initialize();
-            await this.setStateAsync('info.connection', { val: true, ack: true });
         } catch (err: any) {
             await this.setStateAsync('info.connection', { val: false, ack: true });
+            this.log.error(err);
+            return;
         }
+
+        await this.setStateAsync('info.connection', { val: true, ack: true });
 
         await this.createFolder('channels', 'Followed Twitch Channels');
 

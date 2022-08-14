@@ -1,5 +1,7 @@
 {
     "Options": "Options",
     "Authentication Token": "Authentication Token",
-    "Twitch Username": "Twitch Username"
+    "Twitch Username": "Twitch Username",
+    "Authentication Description": "To get the authentication token you must press the Link under the description. After there will be opened a new tab in the browser where you need to login to Twitch and give access. When you accept it should redirect you to your localhost. In the addressbar you need to copy the access_token as shown in the picture.",
+    "Authentication Link": "Authentication Link"
 }

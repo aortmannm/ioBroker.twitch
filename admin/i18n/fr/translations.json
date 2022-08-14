@@ -1,5 +1,7 @@
 {
     "Options": "Choix",
     "Authentication Token": "Jeton d'authentification",
-    "Twitch Username": "Nom d'utilisateur Twitch"
+    "Twitch Username": "Nom d'utilisateur Twitch",
+    "Authentication Description": "Pour obtenir le jeton d'authentification, vous devez appuyer sur le lien sous la description. Après il sera ouvert un nouvel onglet dans le navigateur où vous devez vous connecter à Twitch et donner accès. Lorsque vous l'acceptez, il devrait vous rediriger vers votre hôte local. Dans la barre d'adresse, vous devez copier le bouton d'accès comme indiqué dans l'image.",
+    "Authentication Link": "Lien d'authentification"
 }
