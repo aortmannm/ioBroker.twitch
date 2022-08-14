@@ -10,9 +10,9 @@
 
 **Tests:** ![Test and Release](https://github.com/aortmannm/ioBroker.twitch/workflows/Test%20and%20Release/badge.svg)
 
-## twitch adapter for ioBroker
+## Twitch adapter for ioBroker
 
-Adapter to show Twitch information
+Adapter to show Twitch information about the persons you follow.
 
 Right now it can list all the Followers with the online status and viewer count. The online status and viewer count will update every 60 Seconds.
 
