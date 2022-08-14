@@ -1,4 +1,4 @@
-![Logo](admin/twitch.png)
+<img src="admin/twitch.png" width="250">
 
 # ioBroker.twitch
 
@@ -18,9 +18,21 @@ Adapter to show Twitch information
 
 Right now it can list all the Followers with the online status and viewer count. The online status and viewer count will update every 60 Seconds.
 
-If you unfollow a person on twitch it will cleanup the channel and states in ioBroker but just every hour.
+If you unfollow a person on twitch it will cleanup the channel and states in ioBroker with the update period.
 
-### **WORK IN PROGRESS**
+## Coding examples
+
+### Live notification for a Streamer
+
+```
+const VINI_ONLINE_STATE = 'twitch.0.channels.V1nKub.online';
+
+on({ id: VINI_ONLINE_STATE, val: true, ack: true, change: 'ne' }, () => {
+    sendTo('telegram.0', 'send', {
+        text: 'V1nKub is live!',
+    });
+});
+```
 
 ## Changelog
 
