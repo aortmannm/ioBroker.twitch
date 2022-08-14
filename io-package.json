@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "twitch",
-        "version": "0.0.7",
+        "version": "0.0.8",
         "news": {
             "0.0.1": {
                 "en": "initial release",
@@ -51,9 +51,6 @@
         "extIcon": "https://raw.githubusercontent.com/aortmannm/ioBroker.twitch/main/admin/twitch.png",
         "readme": "https://github.com/aortmannm/ioBroker.twitch/blob/main/README.md",
         "loglevel": "info",
-        "localLinks": {
-            "_default": "%web_protocol%://%ip%:%web_port%/vis/edit.html"
-        },
         "mode": "daemon",
         "type": "multimedia",
         "compact": true,

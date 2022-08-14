@@ -24,6 +24,10 @@ If you unfollow a person on twitch it will cleanup the channel and states in ioB
 
 ## Changelog
 
+### 0.0.8 (2022-08-14)
+
+-   (aortmannm) - Added more stream information and updated the twitch logo
+
 ### 0.0.7 (2022-08-13)
 
 -   (aortmannm) - First release to test in own production system

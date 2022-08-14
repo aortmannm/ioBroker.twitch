@@ -3,6 +3,7 @@
  */
 
 import * as utils from '@iobroker/adapter-core';
+import { defaultFollowerKeysAndValues } from './helper/default-follower-keys-and-values';
 import { IFollower } from './interfaces/follower.interface';
 import { IStream } from './interfaces/stream.interface';
 import { TwitchApi } from './lib/twitch-api';
@@ -55,14 +56,17 @@ class Twitch extends utils.Adapter {
 
     private async updateFollowersInStore(): Promise<void> {
         this.log.debug('Updating Twich followers');
-        const followers = await this.twitchApi.getFollowers();
+
+        const [followers, liveStreams] = await Promise.all([
+            this.twitchApi.getFollowers(),
+            this.twitchApi.getLiveStreamsIFollow(),
+        ]);
+
         if (!followers || followers.length === 0) {
             return;
         }
 
         await this.cleanUpOldFollowers(followers);
-
-        const liveStreams = await this.twitchApi.getLiveStreamsIFollow();
 
         for (const follower of followers) {
             const followerName = follower.to_name;
@@ -73,7 +77,7 @@ class Twitch extends utils.Adapter {
 
             const followerChannelId = `channels.${followerName}`;
             await this.createFolder(followerChannelId, 'Followed Twitch Channel', followerName);
-            await this.createOrUpdateState(followerChannelId, follower, streamStatus);
+            await this.createOrUpdateStates(followerChannelId, streamStatus);
         }
     }
 
@@ -104,40 +108,34 @@ class Twitch extends utils.Adapter {
         });
     }
 
-    private async createOrUpdateState(
-        followerId: string,
-        follower: IFollower,
-        stream: IStream | undefined,
-    ): Promise<any> {
-        const onlineStateId = `${followerId}.online`;
-        await this.setObjectNotExistsAsync(onlineStateId, {
-            type: 'state',
-            common: {
-                name: 'Online status',
-                type: 'boolean',
-                role: 'indicator',
-                read: true,
-                write: false,
-            },
-            native: {},
-        });
+    private async createOrUpdateStates(followerId: string, stream: IStream | undefined): Promise<any> {
+        for (const [stateNameInStore, defaultValuesAndLocation] of Object.entries(defaultFollowerKeysAndValues)) {
+            const stateName = `${followerId}.${stateNameInStore}`;
 
-        await this.setStateAsync(onlineStateId, { val: stream?.type === 'live' ? true : false, ack: true });
+            await this.setObjectNotExistsAsync(stateName, {
+                type: 'state',
+                common: {
+                    name: defaultValuesAndLocation.description,
+                    type: defaultValuesAndLocation.type as ioBroker.CommonType,
+                    role: 'indicator',
+                    read: true,
+                    write: false,
+                },
+                native: {},
+            });
 
-        const viewerStateId = `${followerId}.viewer`;
-        await this.setObjectNotExistsAsync(viewerStateId, {
-            type: 'state',
-            common: {
-                name: 'Count of Viewers',
-                type: 'number',
-                role: 'indicator',
-                read: true,
-                write: false,
-            },
-            native: {},
-        });
+            let value = defaultValuesAndLocation.defaultValue;
 
-        await this.setStateAsync(viewerStateId, { val: stream?.viewer_count ? stream.viewer_count : 0, ack: true });
+            if (stream) {
+                if (stateNameInStore === 'online') {
+                    value = true;
+                } else {
+                    value = (stream as any)[defaultValuesAndLocation.findIn];
+                }
+            }
+
+            await this.setStateAsync(stateName, { val: value, ack: true });
+        }
     }
 
     /**

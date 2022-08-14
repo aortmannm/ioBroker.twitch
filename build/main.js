@@ -18,6 +18,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var utils = __toESM(require("@iobroker/adapter-core"));
+var import_default_follower_keys_and_values = require("./helper/default-follower-keys-and-values");
 var import_twitch_api = require("./lib/twitch-api");
 const UPDATE_INTERVAL_IN_MILLISECONDS = 6e4;
 class Twitch extends utils.Adapter {
@@ -54,12 +55,14 @@ class Twitch extends utils.Adapter {
   }
   async updateFollowersInStore() {
     this.log.debug("Updating Twich followers");
-    const followers = await this.twitchApi.getFollowers();
+    const [followers, liveStreams] = await Promise.all([
+      this.twitchApi.getFollowers(),
+      this.twitchApi.getLiveStreamsIFollow()
+    ]);
     if (!followers || followers.length === 0) {
       return;
     }
     await this.cleanUpOldFollowers(followers);
-    const liveStreams = await this.twitchApi.getLiveStreamsIFollow();
     for (const follower of followers) {
       const followerName = follower.to_name;
       const streamStatus = liveStreams.find((stream) => {
@@ -67,7 +70,7 @@ class Twitch extends utils.Adapter {
       });
       const followerChannelId = `channels.${followerName}`;
       await this.createFolder(followerChannelId, "Followed Twitch Channel", followerName);
-      await this.createOrUpdateState(followerChannelId, follower, streamStatus);
+      await this.createOrUpdateStates(followerChannelId, streamStatus);
     }
   }
   async cleanUpOldFollowers(followers) {
@@ -93,33 +96,30 @@ class Twitch extends utils.Adapter {
       }
     });
   }
-  async createOrUpdateState(followerId, follower, stream) {
-    const onlineStateId = `${followerId}.online`;
-    await this.setObjectNotExistsAsync(onlineStateId, {
-      type: "state",
-      common: {
-        name: "Online status",
-        type: "boolean",
-        role: "indicator",
-        read: true,
-        write: false
-      },
-      native: {}
-    });
-    await this.setStateAsync(onlineStateId, { val: (stream == null ? void 0 : stream.type) === "live" ? true : false, ack: true });
-    const viewerStateId = `${followerId}.viewer`;
-    await this.setObjectNotExistsAsync(viewerStateId, {
-      type: "state",
-      common: {
-        name: "Count of Viewers",
-        type: "number",
-        role: "indicator",
-        read: true,
-        write: false
-      },
-      native: {}
-    });
-    await this.setStateAsync(viewerStateId, { val: (stream == null ? void 0 : stream.viewer_count) ? stream.viewer_count : 0, ack: true });
+  async createOrUpdateStates(followerId, stream) {
+    for (const [stateNameInStore, defaultValuesAndLocation] of Object.entries(import_default_follower_keys_and_values.defaultFollowerKeysAndValues)) {
+      const stateName = `${followerId}.${stateNameInStore}`;
+      await this.setObjectNotExistsAsync(stateName, {
+        type: "state",
+        common: {
+          name: defaultValuesAndLocation.description,
+          type: defaultValuesAndLocation.type,
+          role: "indicator",
+          read: true,
+          write: false
+        },
+        native: {}
+      });
+      let value = defaultValuesAndLocation.defaultValue;
+      if (stream) {
+        if (stateNameInStore === "online") {
+          value = true;
+        } else {
+          value = stream[defaultValuesAndLocation.findIn];
+        }
+      }
+      await this.setStateAsync(stateName, { val: value, ack: true });
+    }
   }
   onUnload(callback) {
     try {
