@@ -2,6 +2,6 @@
     "Options": "Opciones",
     "Authentication Token": "Token de autenticación",
     "Twitch Username": "Nombre de usuario de contracción",
-    "Authentication Description": "Para obtener el token de autenticación, debe presionar el enlace debajo de la descripción. ",
-    "Authentication Link": "Enlace de autenticación"
+    "Authentication Link": "Enlace de autenticación",
+    "Authentication Description": "Para obtener el token de autenticación, debe presionar el enlace debajo de la descripción. Después, se abrirá una nueva pestaña en el navegador donde deberá iniciar sesión en Twitch y dar acceso. Cuando acepte, debería redirigirlo a su servidor local. En la barra de direcciones, debe copiar access_token como se muestra en la imagen."
 }

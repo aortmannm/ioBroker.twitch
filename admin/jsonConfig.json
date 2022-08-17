@@ -38,7 +38,8 @@
                 },
                 "authExampleImage": {
                     "type": "staticImage",
-                    "src": "auth.png",
+                    "src": "https://github.com/aortmannm/ioBroker.twitch/blob/main/admin/auth.png",
+                    "href": "https://github.com/aortmannm/ioBroker.twitch/blob/main/admin/auth.png",
                     "sm": 6,
                     "md": 6,
                     "lg": 6

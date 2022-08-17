@@ -2,6 +2,6 @@
     "Options": "选项",
     "Authentication Token": "身份验证令牌",
     "Twitch Username": "抽搐用户名",
-    "Authentication Description": "要取得你的核证,就必须在说明中宣传联系。 在那以后,将打开新一张的桌子,在那里,你需要想到Twitch,并给予准入。 当你接受时,应把你调到你的地方。 在讲话中,你需要复制“见图”。.",
-    "Authentication Link": "认证链接"
+    "Authentication Link": "认证链接",
+    "Authentication Description": "要获取身份验证令牌，您必须按说明下的链接。之后将在浏览器中打开一个新选项卡，您需要在其中登录 Twitch 并授予访问权限。当您接受时，它应该将您重定向到您的本地主机。在地址栏中，您需要复制 access_token，如图所示。"
 }

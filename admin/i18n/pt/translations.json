@@ -2,6 +2,6 @@
     "Options": "Opções",
     "Authentication Token": "Token de autenticação",
     "Twitch Username": "Nome de usuário do Twitch",
-    "Authentication Description": "Para obter o token de autenticação, você deve pressionar o Link sob a descrição. Depois que houver será aberto uma nova guia no navegador onde você precisa fazer login no Twitch e dar acesso. Quando você aceita, deve redirecionar você para o seu localhost. Na barra de endereços você precisa copiar o access_token como mostrado na imagem.",
-    "Authentication Link": "Link de autenticação"
+    "Authentication Link": "Link de autenticação",
+    "Authentication Description": "Para obter o token de autenticação, você deve pressionar o Link abaixo da descrição. Após será aberta uma nova aba no navegador onde você precisa fazer login no Twitch e dar acesso. Quando você aceita, deve redirecioná-lo para seu localhost. Na barra de endereços você precisa copiar o access_token conforme mostrado na imagem."
 }

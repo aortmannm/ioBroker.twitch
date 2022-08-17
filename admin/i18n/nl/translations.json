@@ -2,6 +2,6 @@
     "Options": "Opties",
     "Authentication Token": "Authenticatietoken",
     "Twitch Username": "Twitch-gebruikersnaam",
-    "Authentication Description": "Om de authenticatie te krijgen moet je de Link onder de beschrijving drukken. Nadat er een nieuwe rekening wordt geopend in de browser waar je inlogt bij Twitch en toegang moet geven. Als je het accepteert, moet je naar je lokaal gebied leiden. In de adresbar moet je de toegangsgesprekken kopiëren als op de foto.",
-    "Authentication Link": "Authenticatielink"
+    "Authentication Link": "Authenticatielink",
+    "Authentication Description": "Om het authenticatietoken te krijgen, moet u op de link onder de beschrijving drukken. Daarna wordt er een nieuw tabblad geopend in de browser waar je moet inloggen op Twitch en toegang moet geven. Wanneer je accepteert, zou het je moeten doorverwijzen naar je localhost. In de adresbalk moet je de access_token kopiëren zoals op de afbeelding."
 }
