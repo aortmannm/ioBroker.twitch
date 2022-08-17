@@ -36,6 +36,10 @@ on({ id: VINI_ONLINE_STATE, val: true, ack: true, change: 'ne' }, () => {
 
 ## Changelog
 
+### 0.0.11 (2022-08-17)
+
+-   (aortmannm) - Fixed image link in description
+
 ### 0.0.10 (2022-08-17)
 
 -   (aortmannm) - Fixed translation bug and image link in description

@@ -38,8 +38,8 @@
                 },
                 "authExampleImage": {
                     "type": "staticImage",
-                    "src": "https://github.com/aortmannm/ioBroker.twitch/blob/main/admin/auth.png",
-                    "href": "https://github.com/aortmannm/ioBroker.twitch/blob/main/admin/auth.png",
+                    "src": "https://raw.githubusercontent.com/aortmannm/ioBroker.twitch/main/admin/auth.png",
+                    "href": "https://github.com/aortmannm/ioBroker.twitch/",
                     "sm": 6,
                     "md": 6,
                     "lg": 6
