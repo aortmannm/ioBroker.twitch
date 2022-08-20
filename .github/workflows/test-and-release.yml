@@ -47,19 +47,17 @@ jobs:
                   # Uncomment the following line if your adapter cannot be installed using 'npm ci'
                   # install-command: 'npm install'
                   build: false
-
-  deploy:
+deploy:
     needs: [check-and-lint, adapter-tests]
 
     if: |
-      contains(github.event.head_commit.message, '[skip ci]') == false &&
-      github.event_name == 'push' &&
-      startsWith(github.ref, 'refs/tags/v')
+        contains(github.event.head_commit.message, '[skip ci]') == false &&
+        github.event_name == 'push' &&
+        startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-
     steps:
-      - uses: ioBroker/testing-action-deploy@v1
-        with:
-          node-version: '16.x'
-          npm-token: ${{ secrets.NPM_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+        - uses: ioBroker/testing-action-deploy@v1
+          with:
+              node-version: '16.x'
+              npm-token: ${{ secrets.NPM_TOKEN }}
+              github-token: ${{ secrets.GITHUB_TOKEN }}
