@@ -22,12 +22,6 @@ __export(default_follower_keys_and_values_exports, {
 });
 module.exports = __toCommonJS(default_follower_keys_and_values_exports);
 const defaultFollowerKeysAndValues = {
-  online: {
-    defaultValue: false,
-    findIn: "type",
-    description: "Online status",
-    type: "boolean"
-  },
   viewer: {
     defaultValue: 0,
     findIn: "viewer_count",
@@ -63,6 +57,12 @@ const defaultFollowerKeysAndValues = {
     findIn: "language",
     description: "Language",
     type: "string"
+  },
+  online: {
+    defaultValue: false,
+    findIn: "type",
+    description: "Online status",
+    type: "boolean"
   }
 };
 // Annotate the CommonJS export names for ESM import in node:
