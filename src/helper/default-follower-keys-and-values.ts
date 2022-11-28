@@ -1,10 +1,4 @@
 export const defaultFollowerKeysAndValues = {
-    online: {
-        defaultValue: false,
-        findIn: 'type',
-        description: 'Online status',
-        type: 'boolean',
-    },
     viewer: {
         defaultValue: 0,
         findIn: 'viewer_count',
@@ -40,5 +34,11 @@ export const defaultFollowerKeysAndValues = {
         findIn: 'language',
         description: 'Language',
         type: 'string',
+    },
+    online: {
+        defaultValue: false,
+        findIn: 'type',
+        description: 'Online status',
+        type: 'boolean',
     },
 };
