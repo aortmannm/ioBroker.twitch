@@ -44,9 +44,9 @@ export class TwitchApi {
     }
 
     public async getFollowers(followers: Array<IFollower> = [], paginationCursor?: string): Promise<Array<IFollower>> {
-        let followerUrl = `https://api.twitch.tv/helix/users/follows?from_id=${this.userId}&first=100`;
+        let followerUrl = `https://api.twitch.tv/helix/channels/followed?user_id=${this.userId}&first=100`;
         if (paginationCursor) {
-            followerUrl = `https://api.twitch.tv/helix/users/follows?from_id=${this.userId}&first=100&after=${paginationCursor}`;
+            followerUrl = `https://api.twitch.tv/helix/channels/followed?user_id=${this.userId}&first=100&after=${paginationCursor}`;
         }
 
         return axios

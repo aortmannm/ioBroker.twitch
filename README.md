@@ -36,6 +36,10 @@ on({ id: VINI_ONLINE_STATE, val: true, ack: true, change: 'ne' }, () => {
 
 ## Changelog
 
+### 0.1.2 (2023-09-28)
+
+-   (aortmannm) - Updated Follower API Call because the old one was deprecated and not working anymore
+
 ### 0.1.1 (2022-11-28)
 
 -   (aortmannm) - Updated order of default follower keys, online will be set as last one that all information for notifications is given

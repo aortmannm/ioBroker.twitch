@@ -72,7 +72,7 @@ class Twitch extends utils.Adapter {
         await this.cleanUpOldFollowers(followers);
 
         for (const follower of followers) {
-            const followerName = follower.to_name;
+            const followerName = follower.broadcaster_name;
 
             const streamStatus = liveStreams.find((stream) => {
                 return stream.user_name === followerName;
@@ -89,7 +89,7 @@ class Twitch extends utils.Adapter {
 
         const channelsToDelete = channels.filter((channel) => {
             return !followers.find((follower: IFollower) => {
-                return follower.to_name === channel.native.twitchName;
+                return follower.broadcaster_name === channel.native.twitchName;
             });
         });
 
